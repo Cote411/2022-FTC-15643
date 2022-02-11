@@ -24,6 +24,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
@@ -62,6 +63,7 @@ public class SampleMecanumDrive extends MecanumDrive {
     public static double VY_WEIGHT = 1;
     public static double OMEGA_WEIGHT = 1;
 
+
     private TrajectorySequenceRunner trajectorySequenceRunner;
 
     private static final TrajectoryVelocityConstraint VEL_CONSTRAINT = getVelocityConstraint(MAX_VEL, MAX_ANG_VEL, TRACK_WIDTH);
@@ -69,7 +71,8 @@ public class SampleMecanumDrive extends MecanumDrive {
 
     private TrajectoryFollower follower;
 
-    private DcMotorEx leftFront, leftRear, rightRear, rightFront;
+    public DcMotorEx leftFront, leftRear, rightRear, rightFront, spinner, turntable, intake, lift;
+    public Servo flipIntake, bucketServo, flipBucket, angleChanger;
     private List<DcMotorEx> motors;
 
     private BNO055IMU imu;
@@ -118,6 +121,15 @@ public class SampleMecanumDrive extends MecanumDrive {
         leftRear = hardwareMap.get(DcMotorEx.class, "Q3/bl");
         rightRear = hardwareMap.get(DcMotorEx.class, "Q4/br");
         rightFront = hardwareMap.get(DcMotorEx.class, "Q1/fr");
+        spinner = hardwareMap.get(DcMotorEx.class, "carousel");
+        turntable = hardwareMap.get(DcMotorEx.class, "turntable");
+        intake = hardwareMap.get(DcMotorEx.class, "intake");
+        lift = hardwareMap.get(DcMotorEx.class, "lift");
+        angleChanger = hardwareMap.get(Servo.class, "angleChanger");
+        flipBucket = hardwareMap.get(Servo.class, "flipBucket");
+        flipIntake = hardwareMap.get(Servo.class, "flipIntake");
+        bucketServo = hardwareMap.get(Servo.class, "bucketServo");
+
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
 
@@ -189,7 +201,7 @@ public class SampleMecanumDrive extends MecanumDrive {
         );
     }
 
-    public void followTrajectory(TrajectorySequence trajectory) {
+    public void followTrajectory(Trajectory trajectory) {
         followTrajectoryAsync(trajectory);
         waitForIdle();
     }

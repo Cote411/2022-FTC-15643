@@ -12,12 +12,12 @@ public class RedDuckAuto extends LinearOpMode {
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-//        Trajectory myTrajectory = drive.trajectoryBuilder(new Pose2d())
-//                .strafeRight(10)
-//                .forward(5)
-//                .build();
+        Trajectory myTrajectory = drive.trajectoryBuilder(new Pose2d())
+                .strafeRight(10)
+                .forward(5)
+                .build();
 
-        TrajectorySequence myTrajectory = drive.trajectorySequenceBuilder(new Pose2d(-36, -66.75, Math.toRadians(180)))
+        TrajectorySequence myTrajectory1 = drive.trajectorySequenceBuilder(new Pose2d(-36, -66.75, Math.toRadians(180)))
                 .lineTo(new Vector2d(-61.5, -66.75))
                 .addTemporalMarker(1.4, () ->{
                     //run carousel for duck
