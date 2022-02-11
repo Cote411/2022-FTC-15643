@@ -23,17 +23,32 @@ public class DriveCode extends OpMode {
         drive.lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
+
     }
 
     @Override
     public void loop() {
-        setvelocity();
+        setVelocity();
         if(gamepad2.a){
             drive.intake.setPower(1);
         }else if(gamepad2.b){
             drive.intake.setPower(-1);
         }else{
             drive.intake.setPower(0);
+        }
+
+        if(gamepad2.dpad_left){
+            drive.turntable.setPower(0.3);
+        }else if(gamepad2.dpad_right){
+            drive.turntable.setPower(-0.3);
+        }else{
+            drive.turntable.setPower(0);
+        }
+
+        if(gamepad2.x){
+            drive.intake.setTargetPosition(50);
+        }else {
+            drive.intake.setTargetPosition(0);
         }
 
         if(gamepad2.right_trigger != 0){
@@ -45,15 +60,16 @@ public class DriveCode extends OpMode {
         }
 
         if(gamepad2.right_bumper){
-            drive.flipIntake.setPosition(1);
+            drive.angleChanger.setPosition(1);
         }
     }
 
-    public void setvelocity(){
+    public void setVelocity(){
+
         drive.rightFront.setPower(gamepad1.left_stick_y + gamepad1.left_stick_x + gamepad1.right_stick_x);
-        drive.leftFront.setPower(gamepad1.left_stick_y + gamepad1.left_stick_x - gamepad1.right_stick_x);
-        drive.leftRear.setPower(gamepad1.left_stick_y - gamepad1.left_stick_x + gamepad1.right_stick_x);
-        drive.rightRear.setPower(gamepad1.left_stick_y - gamepad1.left_stick_x - gamepad1.right_stick_x);
+        drive.leftFront.setPower(gamepad1.left_stick_y - gamepad1.left_stick_x - gamepad1.right_stick_x);
+        drive.leftRear.setPower(gamepad1.left_stick_y + gamepad1.left_stick_x - gamepad1.right_stick_x);
+        drive.rightRear.setPower(gamepad1.left_stick_y - gamepad1.left_stick_x + gamepad1.right_stick_x);
 
     }
 }
