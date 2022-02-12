@@ -29,26 +29,26 @@ public class DriveCode extends OpMode {
     @Override
     public void loop() {
         setVelocity();
-        if(gamepad2.a){
+        if(gamepad1.a){
             drive.intake.setPower(1);
-        }else if(gamepad2.b){
+        }else if(gamepad1.b){
             drive.intake.setPower(-1);
         }else{
             drive.intake.setPower(0);
         }
 
         if(gamepad2.dpad_left){
-            drive.turntable.setPower(0.3);
-        }else if(gamepad2.dpad_right){
+            drive.turntable.setTargetPosition(-268);
             drive.turntable.setPower(-0.3);
+        }else if(gamepad2.dpad_right){
+            drive.turntable.setPower(0.3);
         }else{
             drive.turntable.setPower(0);
         }
-
         if(gamepad2.x){
-            drive.intake.setTargetPosition(50);
+            drive.intake.setPower(1);
         }else {
-            drive.intake.setTargetPosition(0);
+            drive.intake.setPower(0);
         }
 
         if(gamepad2.right_trigger != 0){
@@ -58,8 +58,17 @@ public class DriveCode extends OpMode {
         }else{
             drive.lift.setPower(0);
         }
+        telemetry.addData("port for flipIntake:", drive.flipIntake.getPortNumber());
+        telemetry.update();
 
         if(gamepad2.right_bumper){
+            drive.flipIntake.setPosition(0);
+        }else{
+            drive.flipIntake.setPosition(1);
+        }
+        if(gamepad2.left_bumper){
+            drive.angleChanger.setPosition(0.25);
+        }else{
             drive.angleChanger.setPosition(1);
         }
     }
